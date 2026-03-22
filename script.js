@@ -14,9 +14,9 @@ function setupClock() {
     const seconds = now.getSeconds();
 
     // 時針は分針の位置も考慮する
-    const hourDegrees = (hours % 12) * 30 + minutes * 0.5;
+    const hourDegrees = (hours % 12) * 30 + (minutes / 60) * 30;
     // 分針は秒針の位置も考慮する
-    const minuteDegrees = minutes * 6 + seconds * 0.1;
+    const minuteDegrees = minutes * 6 + (seconds / 60) * 6;
     // 秒針
     const secondDegrees = seconds * 6;
 
