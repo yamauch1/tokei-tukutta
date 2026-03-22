@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>課題4 - BMI計算フォーム</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 15px;
+      }
+
+      /* フォームエリア */
+      .form-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background-color: #fff;
+      }
+
+      .form-header {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 4px;
+      }
+
+      .header-item {
+        text-align: center;
+        padding: 5px;
+        border-bottom: 2px solid #007bff;
+      }
+
+      .sub-header {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #6c757d;
+        text-align: center;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+
+      .form-row:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .input-group label {
+        font-size: 12px;
+        color: #6c757d;
+        text-align: center;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 5px;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .unit-label {
+        font-size: 12px;
+        color: #6c757d;
+        text-align: center;
+        padding-top: 8px;
+        font-weight: bold;
+      }
+
+      .gender-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 5px;
+      }
+
+      .gender-group label {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: normal;
+        cursor: pointer;
+        margin-bottom: 0;
+      }
+
+      .gender-group input[type="radio"] {
+        margin-right: 4px;
+        transform: scale(1.1);
+      }
+
+      .bmi-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .bmi-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #007bff;
+        padding: 5px 10px;
+        border: 2px solid #007bff;
+        border-radius: 4px;
+        background-color: #e3f2fd;
+      }
+
+      /* ボタンエリア */
+      .button-row {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .test-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        text-align: center;
+      }
+
+      .test-button:hover {
+        background-color: #218838;
+      }
+
+      .test-button:active {
+        background-color: #1e7e34;
+      }
+
+      /* 画面2エリア */
+      .screen2-section {
+        display: none;
+        margin-top: 40px;
+        padding: 30px;
+        border: 3px solid #28a745;
+        border-radius: 8px;
+        background-color: #e8f5e9;
+        position: relative;
+      }
+
+      .screen2-section.active {
+        display: block;
+      }
+
+      .screen2-header {
+        text-align: center;
+        color: #1e7e34;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #28a745;
+        padding-bottom: 10px;
+      }
+
+      .screen2-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .display-field {
+        background-color: white;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #c8e6c9;
+        text-align: center;
+      }
+
+      .display-label {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .display-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #1e7e34;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      .close-button:hover {
+        background-color: #c82333;
+      }
+
+      /* BMIステータス表示 */
+      .bmi-status {
+        text-align: center;
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .status-under {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .status-normal {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .status-over {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .status-obese {
+        background-color: #f1b0b7;
+        color: #721c24;
+        border: 1px solid #f08080;
+      }
+
+      /* コントロールボタン */
+      .controls-row {
+        display: grid;
+        grid-template-columns: repeat(43, 1fr);
+        gap: 5px;
+        margin-top: 20px;
+      }
+
+      .control-button {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s;
+      }
+
+      .control-button:hover {
+        background-color: #5a6268;
+      }
+
+      /* レスポンシブデザイン */
+      @media (max-width: 1200px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(10, 1fr);
+        }
+        .screen2-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(5, 1fr);
+        }
+        .container {
+          padding: 15px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 360px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* アニメーション */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-section,
+      .screen2-section {
+        animation: fadeIn 0.5s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>課題4 - BMI計算フォーム</h1>
+
+      <!-- メインフォームエリア -->
+      <div class="form-section">
+        <!-- ヘッダー行 -->
+        <div class="form-header">
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+          <div class="header-item">氏名</div>
+        </div>
+
+        <!-- 身長/体重サブヘッダー -->
+        <div class="sub-header">
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+          <div>身長／体重</div>
+        </div>
+
+        <!-- 単位ラベル行 -->
+        <div class="sub-header">
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+          <div class="unit-label">cm</div>
+          <div class="unit-label">kg</div>
+        </div>
+
+        <!-- 性別ヘッダー -->
+        <div class="form-header" style="margin-top: 10px">
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+          <div class="header-item">性別</div>
+        </div>
+
+        <!-- BMIヘッダー -->
+        <div class="form-header" style="margin-top: 10px">
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+          <div class="header-item">BMI</div>
+        </div>
+
+        <!-- フォーム行1 -->
+        <div class="form-row">
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(1)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(1)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(2)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(2)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(3)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(3)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(4)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(4)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(5)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(5)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(6)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(6)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(7)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(7)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(8)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(8)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(9)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(9)"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>コントロール：text</label>
+            <input type="text" placeholder="氏名を入力" />
+          </div>
+          <div class="input-group">
+            <label>身長</label>
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="身長(cm)"
+                oninput="calculateBMI(10)"
+              />
+              <input
+                type="text"
+                placeholder="体重(kg)"
+                oninput="calculateBMI(10)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 性別選択行1 -->
+        <div class="form-row">
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender1"
+                value="male"
+                onchange="updateScreen2(1)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender1"
+                value="female"
+                onchange="updateScreen2(1)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi1">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender2"
+                value="male"
+                onchange="updateScreen2(2)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender2"
+                value="female"
+                onchange="updateScreen2(2)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi2">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender3"
+                value="male"
+                onchange="updateScreen2(3)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender3"
+                value="female"
+                onchange="updateScreen2(3)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi3">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender4"
+                value="male"
+                onchange="updateScreen2(4)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender4"
+                value="female"
+                onchange="updateScreen2(4)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi4">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender5"
+                value="male"
+                onchange="updateScreen2(5)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender5"
+                value="female"
+                onchange="updateScreen2(5)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi5">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender6"
+                value="male"
+                onchange="updateScreen2(6)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender6"
+                value="female"
+                onchange="updateScreen2(6)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi6">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender7"
+                value="male"
+                onchange="updateScreen2(7)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender7"
+                value="female"
+                onchange="updateScreen2(7)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi7">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender8"
+                value="male"
+                onchange="updateScreen2(8)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender8"
+                value="female"
+                onchange="updateScreen2(8)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi8">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender9"
+                value="male"
+                onchange="updateScreen2(9)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender9"
+                value="female"
+                onchange="updateScreen2(9)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi9">0.00</div>
+          </div>
+          <div class="gender-group">
+            <label
+              ><input
+                type="radio"
+                name="gender10"
+                value="male"
+                onchange="updateScreen2(10)"
+              />
+              男</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="gender10"
+                value="female"
+                onchange="updateScreen2(10)"
+              />
+              女</label
+            >
+          </div>
+          <div class="bmi-group">
+            <label>BMI計算</label>
+            <div class="bmi-value" id="bmi10">0.00</div>
+          </div>
+        </div>
+
+        <!-- テストボタン行 -->
+        <div class="button-row">
+          <button class="test-button" onclick="calculateAllBMI()">
+            BMI計算
+          </button>
+          <button class="test-button" onclick="showScreen2(1)">
+            画面2表示
+          </button>
+          <button class="test-button" onclick="validateForm()">
+            入力チェック
+          </button>
+          <button class="test-button" onclick="exportData()">データ出力</button>
+          <button class="test-button" onclick="resetForm()">リセット</button>
+          <button class="test-button" onclick="fillSampleData()">
+            サンプル入力
+          </button>
+          <button class="test-button" onclick="calculateAverage()">
+            平均BMI
+          </button>
+          <button class="test-button" onclick="findExtremes()">最大最小</button>
+          <button class="test-button" onclick="classifyBMI()">BMI分類</button>
+          <button class="test-button" onclick="saveToLocalStorage()">
+            保存
+          </button>
+          <button class="test-button" onclick="loadFromLocalStorage()">
+            読み込み
+          </button>
+          <button class="test-button" onclick="printForm()">印刷</button>
+          <button class="test-button" onclick="exportCSV()">CSV出力</button>
+          <button class="test-button" onclick="clearAllInputs()">
+            全クリア
+          </button>
+          <button class="test-button" onclick="highlightAbnormal()">
+            異常値
+          </button>
+          <button class="test-button" onclick="sortByName()">名前ソート</button>
+          <button class="test-button" onclick="sortByBMI()">BMIソート</button>
+          <button class="test-button" onclick="generateReport()">
+            レポート
+          </button>
+          <button class="test-button" onclick="checkDuplicates()">
+            重複チェック
+          </button>
+          <button class="test-button" onclick="autoFill()">自動入力</button>
+        </div>
+
+        <!-- コントロールボタン行 -->
+        <div class="controls-row">
+          <button class="control-button" onclick="selectAll()">
+            すべて選択
+          </button>
+          <button class="control-button" onclick="clearAll()">
+            すべてクリア
+          </button>
+          <button class="control-button" onclick="toggleReadOnly()">
+            読み取り専用
+          </button>
+          <button class="control-button" onclick="enableEditing()">
+            編集可能
+          </button>
+          <button class="control-button" onclick="validateNames()">
+            名前検証
+          </button>
+          <button class="control-button" onclick="countGender()">
+            性別カウント
+          </button>
+          <button class="control-button" onclick="exportJSON()">
+            JSON出力
+          </button>
+          <button class="control-button" onclick="importJSON()">
+            JSON読込
+          </button>
+          <button class="control-button" onclick="focusFirst()">
+            最初にフォーカス
+          </button>
+          <button class="control-button" onclick="focusLast()">
+            最後にフォーカス
+          </button>
+          <button class="control-button" onclick="randomizeData()">
+            データランダム
+          </button>
+          <button class="control-button" onclick="validateAll()">
+            全て検証
+          </button>
+          <button class="control-button" onclick="exportExcel()">
+            Excel出力
+          </button>
+          <button class="control-button" onclick="backupData()">
+            バックアップ
+          </button>
+          <button class="control-button" onclick="restoreData()">復元</button>
+          <button class="control-button" onclick="sendEmail()">
+            メール送信
+          </button>
+          <button class="control-button" onclick="uploadData()">
+            データ送信
+          </button>
+          <button class="control-button" onclick="downloadData()">
+            ダウンロード
+          </button>
+          <button class="control-button" onclick="clearStorage()">
+            保存削除
+          </button>
+          <button class="control-button" onclick="toggleTheme()">
+            テーマ切替
+          </button>
+          <button class="control-button" onclick="showStatistics()">
+            統計情報
+          </button>
+          <button class="control-button" onclick="resetBMI()">
+            BMIリセット
+          </button>
+          <button class="control-button" onclick="copyToClipboard()">
+            クリップボード
+          </button>
+          <button class="control-button" onclick="pasteFromClipboard()">
+            貼り付け
+          </button>
+          <button class="control-button" onclick="generateQR()">
+            QRコード
+          </button>
+          <button class="control-button" onclick="shareData()">共有</button>
+          <button class="control-button" onclick="checkUpdates()">
+            更新確認
+          </button>
+          <button class="control-button" onclick="showHelp()">ヘルプ</button>
+          <button class="control-button" onclick="feedback()">
+            フィードバック
+          </button>
+          <button class="control-button" onclick="settings()">設定</button>
+          <button class="control-button" onclick="about()">
+            バージョン情報
+          </button>
+        </div>
+      </div>
+
+      <!-- 画面2エリア -->
+      <div id="screen2" class="screen2-section">
+        <button class="close-button" onclick="closeScreen2()">
+          画面を閉じる
+        </button>
+        <div class="screen2-header">画面2 - 情報表示</div>
+
+        <div class="screen2-content">
+          <div class="display-field">
+            <div class="display-label">氏名</div>
+            <div class="display-value" id="screen2-name">未選択</div>
+          </div>
+          <div class="display-field">
+            <div class="display-label">性別</div>
+            <div class="display-value" id="screen2-gender">未選択</div>
+          </div>
+          <div class="display-field">
+            <div class="display-label">身長</div>
+            <div class="display-value" id="screen2-height">0 cm</div>
+          </div>
+          <div class="display-field">
+            <div class="display-label">体重</div>
+            <div class="display-value" id="screen2-weight">0 kg</div>
+          </div>
+          <div class="display-field">
+            <div class="display-label">BMI</div>
+            <div class="display-value" id="screen2-bmi">0.00</div>
+          </div>
+          <div class="display-field">
+            <div class="display-label">BMIステータス</div>
+            <div class="display-value" id="screen2-status">未計算</div>
+          </div>
+        </div>
+
+        <div id="bmi-status-display" class="bmi-status status-normal">
+          正常なBMI値です
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // BMI計算関数
+      function calculateBMI(index) {
+        const heightInput = document.querySelectorAll(
+          'input[placeholder="身長(cm)"]',
+        )[index - 1];
+        const weightInput = document.querySelectorAll(
+          'input[placeholder="体重(kg)"]',
+        )[index - 1];
+        const bmiDisplay = document.getElementById("bmi" + index);
+
+        if (!heightInput || !weightInput || !bmiDisplay) return;
+
+        const height = parseFloat(heightInput.value);
+        const weight = parseFloat(weightInput.value);
+
+        if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+          bmiDisplay.textContent = "0.00";
+          return;
+        }
+
+        // BMI = 体重(kg) ÷ (身長(m))²
+        const heightInMeters = height / 100;
+        const bmi = weight / (heightInMeters * heightInMeters);
+
+        bmiDisplay.textContent = bmi.toFixed(2);
+
+        // BMIステータスを更新
+        updateBMIStatus(index, bmi);
+
+        // 画面2を更新
+        updateScreen2(index);
+      }
+
+      // 全BMI計算
+      function calculateAllBMI() {
+        for (let i = 1; i <= 10; i++) {
+          calculateBMI(i);
+        }
+        alert("全てのBMIを計算しました");
+      }
+
+      // BMIステータス更新
+      function updateBMIStatus(index, bmi) {
+        const bmiDisplay = document.getElementById("bmi" + index);
+        if (!bmiDisplay) return;
+
+        if (bmi < 18.5) {
+          bmiDisplay.style.backgroundColor = "#fff3cd";
+          bmiDisplay.style.color = "#856404";
+          bmiDisplay.style.borderColor = "#ffc107";
+        } else if (bmi < 25) {
+          bmiDisplay.style.backgroundColor = "#d4edda";
+          bmiDisplay.style.color = "#155724";
+          bmiDisplay.style.borderColor = "#28a745";
+        } else if (bmi < 30) {
+          bmiDisplay.style.backgroundColor = "#f8d7da";
+          bmiDisplay.style.color = "#721c24";
+          bmiDisplay.style.borderColor = "#dc3545";
+        } else {
+          bmiDisplay.style.backgroundColor = "#f1b0b7";
+          bmiDisplay.style.color = "#721c24";
+          bmiDisplay.style.borderColor = "#f08080";
+        }
+      }
+
+      // 画面2表示
+      function showScreen2(index) {
+        updateScreen2(index);
+        document.getElementById("screen2").classList.add("active");
+        window.scrollTo({
+          top: document.getElementById("screen2").offsetTop,
+          behavior: "smooth",
+        });
+      }
+
+      // 画面2更新
+      function updateScreen2(index) {
+        const nameInput = document.querySelectorAll(
+          'input[placeholder="氏名を入力"]',
+        )[index - 1];
+        const heightInput = document.querySelectorAll(
+          'input[placeholder="身長(cm)"]',
+        )[index - 1];
+        const weightInput = document.querySelectorAll(
+          'input[placeholder="体重(kg)"]',
+        )[index - 1];
+        const genderRadio = document.querySelector(
+          `input[name="gender${index}"]:checked`,
+        );
+
+        if (!nameInput || !heightInput || !weightInput) return;
+
+        const name = nameInput.value || "未入力";
+        const height = heightInput.value || "0";
+        const weight = weightInput.value || "0";
+        const gender = genderRadio
+          ? genderRadio.value === "male"
+            ? "男性"
+            : "女性"
+          : "未選択";
+
+        // BMI計算
+        let bmi = 0;
+        let status = "未計算";
+        let statusClass = "status-normal";
+
+        if (height && weight && height > 0 && weight > 0) {
+          const heightInMeters = parseFloat(height) / 100;
+          const weightNum = parseFloat(weight);
+          bmi = weightNum / (heightInMeters * heightInMeters);
+          status = getBMIStatusText(bmi);
+          statusClass = getBMIStatusClass(bmi);
+        }
+
+        // 画面2の内容を更新
+        document.getElementById("screen2-name").textContent = name;
+        document.getElementById("screen2-gender").textContent = gender;
+        document.getElementById("screen2-height").textContent = height + " cm";
+        document.getElementById("screen2-weight").textContent = weight + " kg";
+        document.getElementById("screen2-bmi").textContent = bmi.toFixed(2);
+        document.getElementById("screen2-status").textContent = status;
+
+        // BMIステータス表示を更新
+        const statusDisplay = document.getElementById("bmi-status-display");
+        statusDisplay.textContent = status;
+        statusDisplay.className = "bmi-status " + statusClass;
+      }
+
+      // BMIステータステキスト取得
+      function getBMIStatusText(bmi) {
+        if (bmi < 18.5) return "低体重（やせ型）";
+        if (bmi < 25) return "普通体重";
+        if (bmi < 30) return "肥満（1度）";
+        if (bmi < 35) return "肥満（2度）";
+        if (bmi < 40) return "肥満（3度）";
+        return "肥満（4度）";
+      }
+
+      // BMIステータスクラス取得
+      function getBMIStatusClass(bmi) {
+        if (bmi < 18.5) return "status-under";
+        if (bmi < 25) return "status-normal";
+        return "status-over";
+      }
+
+      // 画面2を閉じる
+      function closeScreen2() {
+        document.getElementById("screen2").classList.remove("active");
+      }
+
+      // フォーム検証
+      function validateForm() {
+        let validCount = 0;
+        let invalidCount = 0;
+
+        for (let i = 1; i <= 10; i++) {
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+
+          if (heightInput && weightInput) {
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+
+            if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+              validCount++;
+            } else {
+              invalidCount++;
+            }
+          }
+        }
+
+        alert(`有効な入力: ${validCount}件\n無効な入力: ${invalidCount}件`);
+      }
+
+      // データ出力
+      function exportData() {
+        let data = "氏名,性別,身長(cm),体重(kg),BMI,ステータス\n";
+
+        for (let i = 1; i <= 10; i++) {
+          const nameInput = document.querySelectorAll(
+            'input[placeholder="氏名を入力"]',
+          )[i - 1];
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+          const genderRadio = document.querySelector(
+            `input[name="gender${i}"]:checked`,
+          );
+
+          const name = nameInput ? nameInput.value : "";
+          const height = heightInput ? heightInput.value : "";
+          const weight = weightInput ? weightInput.value : "";
+          const gender = genderRadio
+            ? genderRadio.value === "male"
+              ? "男性"
+              : "女性"
+            : "";
+
+          let bmi = 0;
+          let status = "";
+
+          if (height && weight && height > 0 && weight > 0) {
+            const heightInMeters = parseFloat(height) / 100;
+            const weightNum = parseFloat(weight);
+            bmi = weightNum / (heightInMeters * heightInMeters);
+            status = getBMIStatusText(bmi);
+          }
+
+          data += `"${name}","${gender}","${height}","${weight}","${bmi.toFixed(2)}","${status}"\n`;
+        }
+
+        alert("データ出力:\n" + data);
+      }
+
+      // リセット
+      function resetForm() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const radios = document.querySelectorAll('input[type="radio"]');
+        inputs.forEach((input) => (input.value = ""));
+        radios.forEach((radio) => (radio.checked = false));
+
+        // BMI表示をリセット
+        for (let i = 1; i <= 10; i++) {
+          const bmiDisplay = document.getElementById("bmi" + i);
+          if (bmiDisplay) {
+            bmiDisplay.textContent = "0.00";
+            bmiDisplay.style.backgroundColor = "";
+            bmiDisplay.style.color = "";
+            bmiDisplay.style.borderColor = "";
+          }
+        }
+
+        alert("フォームがリセットされました");
+      }
+
+      // サンプルデータ入力
+      function fillSampleData() {
+        const sampleData = [
+          { name: "山田太郎", gender: "male", height: 175, weight: 70 },
+          { name: "佐藤花子", gender: "female", height: 160, weight: 50 },
+          { name: "鈴木一郎", gender: "male", height: 180, weight: 85 },
+          { name: "高橋美咲", gender: "female", height: 155, weight: 45 },
+          { name: "伊藤健太", gender: "male", height: 170, weight: 65 },
+          { name: "渡辺恵子", gender: "female", height: 165, weight: 55 },
+          { name: "山本浩二", gender: "male", height: 185, weight: 90 },
+          { name: "中村沙織", gender: "female", height: 158, weight: 48 },
+          { name: "小林敦子", gender: "female", height: 162, weight: 52 },
+          { name: "加藤直樹", gender: "male", height: 178, weight: 75 },
+        ];
+
+        sampleData.forEach((data, index) => {
+          const nameInput = document.querySelectorAll(
+            'input[placeholder="氏名を入力"]',
+          )[index];
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[index];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[index];
+          const genderRadio = document.querySelector(
+            `input[name="gender${index + 1}"][value="${data.gender}"]`,
+          );
+
+          if (nameInput) nameInput.value = data.name;
+          if (heightInput) heightInput.value = data.height;
+          if (weightInput) weightInput.value = data.weight;
+          if (genderRadio) genderRadio.checked = true;
+
+          calculateBMI(index + 1);
+        });
+
+        alert("サンプルデータを入力しました");
+      }
+
+      // 平均BMI計算
+      function calculateAverage() {
+        let totalBMI = 0;
+        let count = 0;
+
+        for (let i = 1; i <= 10; i++) {
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+
+          if (heightInput && weightInput) {
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+
+            if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+              const heightInMeters = height / 100;
+              const bmi = weight / (heightInMeters * heightInMeters);
+              totalBMI += bmi;
+              count++;
+            }
+          }
+        }
+
+        if (count > 0) {
+          const average = totalBMI / count;
+          alert(`平均BMI: ${average.toFixed(2)}`);
+        } else {
+          alert("有効なデータがありません");
+        }
+      }
+
+      // 最大最小値検索
+      function findExtremes() {
+        let minBMI = Infinity;
+        let maxBMI = -Infinity;
+        let minIndex = -1;
+        let maxIndex = -1;
+
+        for (let i = 1; i <= 10; i++) {
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+
+          if (heightInput && weightInput) {
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+
+            if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+              const heightInMeters = height / 100;
+              const bmi = weight / (heightInMeters * heightInMeters);
+
+              if (bmi < minBMI) {
+                minBMI = bmi;
+                minIndex = i;
+              }
+              if (bmi > maxBMI) {
+                maxBMI = bmi;
+                maxIndex = i;
+              }
+            }
+          }
+        }
+
+        if (minIndex > 0 && maxIndex > 0) {
+          alert(
+            `最小BMI: ${minBMI.toFixed(2)} (項目${minIndex})\n最大BMI: ${maxBMI.toFixed(2)} (項目${maxIndex})`,
+          );
+        } else {
+          alert("有効なデータがありません");
+        }
+      }
+
+      // BMI分類
+      function classifyBMI() {
+        let under = 0,
+          normal = 0,
+          over = 0,
+          obese = 0;
+
+        for (let i = 1; i <= 10; i++) {
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+
+          if (heightInput && weightInput) {
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+
+            if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+              const heightInMeters = height / 100;
+              const bmi = weight / (heightInMeters * heightInMeters);
+
+              if (bmi < 18.5) under++;
+              else if (bmi < 25) normal++;
+              else if (bmi < 30) over++;
+              else obese++;
+            }
+          }
+        }
+
+        alert(
+          `BMI分類結果:\n低体重: ${under}人\n普通体重: ${normal}人\n肥満: ${over + obese}人`,
+        );
+      }
+
+      // ローカルストレージ保存
+      function saveToLocalStorage() {
+        const data = [];
+
+        for (let i = 1; i <= 10; i++) {
+          const nameInput = document.querySelectorAll(
+            'input[placeholder="氏名を入力"]',
+          )[i - 1];
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+          const genderRadio = document.querySelector(
+            `input[name="gender${i}"]:checked`,
+          );
+
+          data.push({
+            name: nameInput ? nameInput.value : "",
+            height: heightInput ? heightInput.value : "",
+            weight: weightInput ? weightInput.value : "",
+            gender: genderRadio ? genderRadio.value : "",
+          });
+        }
+
+        localStorage.setItem("bmiFormData", JSON.stringify(data));
+        alert("データを保存しました");
+      }
+
+      // ローカルストレージ読み込み
+      function loadFromLocalStorage() {
+        const savedData = localStorage.getItem("bmiFormData");
+        if (savedData) {
+          const data = JSON.parse(savedData);
+
+          data.forEach((item, index) => {
+            const nameInput = document.querySelectorAll(
+              'input[placeholder="氏名を入力"]',
+            )[index];
+            const heightInput = document.querySelectorAll(
+              'input[placeholder="身長(cm)"]',
+            )[index];
+            const weightInput = document.querySelectorAll(
+              'input[placeholder="体重(kg)"]',
+            )[index];
+            const genderRadio = document.querySelector(
+              `input[name="gender${index + 1}"][value="${item.gender}"]`,
+            );
+
+            if (nameInput) nameInput.value = item.name;
+            if (heightInput) heightInput.value = item.height;
+            if (weightInput) weightInput.value = item.weight;
+            if (genderRadio) genderRadio.checked = true;
+
+            calculateBMI(index + 1);
+          });
+
+          alert("保存されたデータを読み込みました");
+        } else {
+          alert("保存されたデータがありません");
+        }
+      }
+
+      // CSV出力
+      function exportCSV() {
+        let csv = "氏名,性別,身長(cm),体重(kg),BMI,ステータス\n";
+
+        for (let i = 1; i <= 10; i++) {
+          const nameInput = document.querySelectorAll(
+            'input[placeholder="氏名を入力"]',
+          )[i - 1];
+          const heightInput = document.querySelectorAll(
+            'input[placeholder="身長(cm)"]',
+          )[i - 1];
+          const weightInput = document.querySelectorAll(
+            'input[placeholder="体重(kg)"]',
+          )[i - 1];
+          const genderRadio = document.querySelector(
+            `input[name="gender${i}"]:checked`,
+          );
+
+          const name = nameInput ? nameInput.value : "";
+          const height = heightInput ? heightInput.value : "";
+          const weight = weightInput ? weightInput.value : "";
+          const gender = genderRadio
+            ? genderRadio.value === "male"
+              ? "男性"
+              : "女性"
+            : "";
+
+          let bmi = 0;
+          let status = "";
+
+          if (height && weight && height > 0 && weight > 0) {
+            const heightInMeters = parseFloat(height) / 100;
+            const weightNum = parseFloat(weight);
+            bmi = weightNum / (heightInMeters * heightInMeters);
+            status = getBMIStatusText(bmi);
+          }
+
+          csv += `"${name}","${gender}","${height}","${weight}","${bmi.toFixed(2)}","${status}"\n`;
+        }
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "bmi_data.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert("CSVファイルをダウンロードしました");
+      }
+
+      // その他の便利関数
+      function selectAll() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input) => input.select());
+        alert("すべてのテキストフィールドを選択しました");
+      }
+
+      function clearAll() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const radios = document.querySelectorAll('input[type="radio"]');
+        inputs.forEach((input) => (input.value = ""));
+        radios.forEach((radio) => (radio.checked = false));
+        alert("すべての入力をクリアしました");
+      }
+
+      function clearStorage() {
+        localStorage.removeItem("bmiFormData");
+        alert("保存データを削除しました");
+      }
+
+      function printForm() {
+        window.print();
+      }
+
+      function toggleReadOnly() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input) => (input.readOnly = !input.readOnly));
+        alert("読み取り専用モードを切り替えました");
+      }
+
+      function enableEditing() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input) => (input.readOnly = false));
+        alert("編集可能モードにしました");
+      }
+    </script>
+  </body>
+</html>

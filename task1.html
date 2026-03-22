@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>課題1 - 基本フォーム構造</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 800px;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="tel"]:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .col {
+        flex: 1;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 5px;
+      }
+
+      .radio-group label {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+
+      .radio-group input[type="radio"] {
+        margin-right: 5px;
+        transform: scale(1.2);
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 12px 30px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      button.secondary {
+        background-color: #6c757d;
+      }
+
+      button.secondary:hover {
+        background-color: #545b62;
+      }
+
+      @media (max-width: 768px) {
+        .row {
+          flex-direction: column;
+        }
+
+        .container {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>課題1 - 基本フォーム構造</h1>
+
+      <form id="basicForm">
+        <div class="form-group">
+          <label for="name">氏名</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="氏名を入力してください"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>性別</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="gender" value="male" /> 男
+            </label>
+            <label>
+              <input type="radio" name="gender" value="female" /> 女
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="email">メールアドレス</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@example.com"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="phone">電話番号</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="090-1234-5678"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="department">部署</label>
+          <select id="department" name="department">
+            <option value="">選択してください</option>
+            <option value="sales">営業部</option>
+            <option value="engineering">技術部</option>
+            <option value="marketing">マーケティング部</option>
+            <option value="finance">財務部</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">備考</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder="備考を入力してください"
+          ></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">送信</button>
+          <button type="button" class="secondary" onclick="resetForm()">
+            リセット
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("basicForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const gender = document.querySelector('input[name="gender"]:checked');
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const department = document.getElementById("department").value;
+          const message = document.getElementById("message").value;
+
+          if (!name || !gender || !email || !phone || !department) {
+            alert("全ての必須項目を入力してください。");
+            return;
+          }
+
+          alert(
+            "フォームが正常に送信されました！\n\n氏名: " +
+              name +
+              "\n性別: " +
+              gender.value +
+              "\nメール: " +
+              email +
+              "\n電話: " +
+              phone +
+              "\n部署: " +
+              department,
+          );
+        });
+
+      function resetForm() {
+        document.getElementById("basicForm").reset();
+        alert("フォームがリセットされました。");
+      }
+    </script>
+  </body>
+</html>

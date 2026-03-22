@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>課題2 - 生徒情報フォーム</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 15px;
+      }
+
+      .form-header {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 4px;
+      }
+
+      .header-item {
+        text-align: center;
+        padding: 5px;
+        border-bottom: 2px solid #007bff;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+
+      .form-row:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-group label {
+        font-size: 12px;
+        color: #6c757d;
+        margin-bottom: 5px;
+        text-align: center;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .gender-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 5px;
+      }
+
+      .gender-group label {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: normal;
+        cursor: pointer;
+        margin-bottom: 0;
+      }
+
+      .gender-group input[type="radio"] {
+        margin-right: 4px;
+        transform: scale(1.1);
+      }
+
+      .button-row {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .test-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        text-align: center;
+      }
+
+      .test-button:hover {
+        background-color: #218838;
+      }
+
+      .test-button:active {
+        background-color: #1e7e34;
+      }
+
+      .controls-row {
+        display: grid;
+        grid-template-columns: repeat(43, 1fr);
+        gap: 5px;
+        margin-top: 20px;
+      }
+
+      .control-button {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s;
+      }
+
+      .control-button:hover {
+        background-color: #5a6268;
+      }
+
+      .gender-header {
+        grid-column: span 20;
+        text-align: center;
+        font-weight: bold;
+        color: #495057;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+      }
+
+      .gender-label {
+        font-size: 12px;
+        color: #6c757d;
+        text-align: center;
+      }
+
+      @media (max-width: 1200px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(10, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(5, 1fr);
+        }
+        .container {
+          padding: 15px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .gender-header {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .form-header,
+        .form-row,
+        .button-row,
+        .controls-row {
+          grid-template-columns: 1fr;
+        }
+        .gender-header {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>課題2 - 生徒情報フォーム</h1>
+
+      <!-- ヘッダー行 -->
+      <div class="form-header">
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+        <div class="header-item">氏名</div>
+      </div>
+
+      <!-- 性別ヘッダー -->
+      <div class="gender-header">
+        <span class="gender-label">性別</span>
+      </div>
+
+      <!-- 性別選択行 -->
+      <div class="form-header">
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+        <div class="header-item">性別</div>
+      </div>
+
+      <!-- フォーム行1 -->
+      <div class="form-row">
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+        <div class="input-group">
+          <label>コントロール：text</label>
+          <input type="text" placeholder="氏名を入力" />
+        </div>
+      </div>
+
+      <!-- 性別選択行1 -->
+      <div class="form-row">
+        <div class="gender-group">
+          <label><input type="radio" name="gender1" value="male" /> 男</label>
+          <label><input type="radio" name="gender1" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender2" value="male" /> 男</label>
+          <label><input type="radio" name="gender2" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender3" value="male" /> 男</label>
+          <label><input type="radio" name="gender3" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender4" value="male" /> 男</label>
+          <label><input type="radio" name="gender4" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender5" value="male" /> 男</label>
+          <label><input type="radio" name="gender5" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender6" value="male" /> 男</label>
+          <label><input type="radio" name="gender6" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender7" value="male" /> 男</label>
+          <label><input type="radio" name="gender7" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender8" value="male" /> 男</label>
+          <label><input type="radio" name="gender8" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender9" value="male" /> 男</label>
+          <label><input type="radio" name="gender9" value="female" /> 女</label>
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender10" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender10" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender11" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender11" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender12" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender12" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender13" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender13" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender14" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender14" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender15" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender15" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender16" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender16" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender17" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender17" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender18" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender18" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender19" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender19" value="female" /> 女</label
+          >
+        </div>
+        <div class="gender-group">
+          <label><input type="radio" name="gender20" value="male" /> 男</label>
+          <label
+            ><input type="radio" name="gender20" value="female" /> 女</label
+          >
+        </div>
+      </div>
+
+      <!-- テストボタン行 -->
+      <div class="button-row">
+        <button class="test-button" onclick="testFunction(1)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(2)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(3)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(4)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(5)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(6)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(7)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(8)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(9)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(10)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(11)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(12)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(13)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(14)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(15)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(16)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(17)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(18)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(19)">
+          テストボタン
+        </button>
+        <button class="test-button" onclick="testFunction(20)">
+          テストボタン
+        </button>
+      </div>
+
+      <!-- コントロールボタン行 -->
+      <div class="controls-row">
+        <button class="control-button" onclick="selectAll()">すべて選択</button>
+        <button class="control-button" onclick="clearAll()">
+          すべてクリア
+        </button>
+        <button class="control-button" onclick="validateForm()">
+          入力チェック
+        </button>
+        <button class="control-button" onclick="exportData()">
+          データ出力
+        </button>
+        <button class="control-button" onclick="resetForm()">リセット</button>
+        <button class="control-button" onclick="toggleGender()">
+          性別切替
+        </button>
+        <button class="control-button" onclick="fillSampleData()">
+          サンプル入力
+        </button>
+        <button class="control-button" onclick="countEntries()">
+          入力数カウント
+        </button>
+        <button class="control-button" onclick="highlightEmpty()">
+          空欄ハイライト
+        </button>
+        <button class="control-button" onclick="saveToLocalStorage()">
+          保存
+        </button>
+        <button class="control-button" onclick="loadFromLocalStorage()">
+          読み込み
+        </button>
+        <button class="control-button" onclick="clearStorage()">
+          保存削除
+        </button>
+        <button class="control-button" onclick="printForm()">印刷</button>
+        <button class="control-button" onclick="exportCSV()">CSV出力</button>
+        <button class="control-button" onclick="importCSV()">CSV読込</button>
+        <button class="control-button" onclick="sortByName()">
+          名前でソート
+        </button>
+        <button class="control-button" onclick="sortByGender()">
+          性別でソート
+        </button>
+        <button class="control-button" onclick="filterByName()">
+          名前フィルタ
+        </button>
+        <button class="control-button" onclick="filterByGender()">
+          性別フィルタ
+        </button>
+        <button class="control-button" onclick="generateReport()">
+          レポート生成
+        </button>
+        <button class="control-button" onclick="checkDuplicates()">
+          重複チェック
+        </button>
+        <button class="control-button" onclick="autoFill()">自動入力</button>
+        <button class="control-button" onclick="clearGender()">
+          性別クリア
+        </button>
+        <button class="control-button" onclick="selectMale()">男性選択</button>
+        <button class="control-button" onclick="selectFemale()">
+          女性選択
+        </button>
+        <button class="control-button" onclick="toggleReadOnly()">
+          読み取り専用
+        </button>
+        <button class="control-button" onclick="enableEditing()">
+          編集可能
+        </button>
+        <button class="control-button" onclick="validateNames()">
+          名前検証
+        </button>
+        <button class="control-button" onclick="countGender()">
+          性別カウント
+        </button>
+        <button class="control-button" onclick="exportJSON()">JSON出力</button>
+        <button class="control-button" onclick="importJSON()">JSON読込</button>
+        <button class="control-button" onclick="clearAllInputs()">
+          全入力クリア
+        </button>
+        <button class="control-button" onclick="focusFirst()">
+          最初にフォーカス
+        </button>
+        <button class="control-button" onclick="focusLast()">
+          最後にフォーカス
+        </button>
+        <button class="control-button" onclick="randomizeGender()">
+          性別ランダム
+        </button>
+        <button class="control-button" onclick="validateAll()">全て検証</button>
+        <button class="control-button" onclick="exportExcel()">
+          Excel出力
+        </button>
+        <button class="control-button" onclick="importExcel()">
+          Excel読込
+        </button>
+        <button class="control-button" onclick="generatePDF()">PDF生成</button>
+        <button class="control-button" onclick="sendEmail()">メール送信</button>
+        <button class="control-button" onclick="uploadData()">
+          データ送信
+        </button>
+        <button class="control-button" onclick="downloadData()">
+          データダウンロード
+        </button>
+        <button class="control-button" onclick="backupData()">
+          データバックアップ
+        </button>
+        <button class="control-button" onclick="restoreData()">
+          データ復元
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // テスト関数
+      function testFunction(index) {
+        alert("テストボタン " + index + " がクリックされました！");
+      }
+
+      // すべて選択
+      function selectAll() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input) => input.select());
+        alert("すべてのテキストフィールドを選択しました");
+      }
+
+      // すべてクリア
+      function clearAll() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const radios = document.querySelectorAll('input[type="radio"]');
+        inputs.forEach((input) => (input.value = ""));
+        radios.forEach((radio) => (radio.checked = false));
+        alert("すべての入力をクリアしました");
+      }
+
+      // 入力チェック
+      function validateForm() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        let emptyCount = 0;
+        let filledCount = 0;
+
+        inputs.forEach((input) => {
+          if (input.value.trim() === "") {
+            emptyCount++;
+          } else {
+            filledCount++;
+          }
+        });
+
+        alert("入力済み: " + filledCount + "件\n未入力: " + emptyCount + "件");
+      }
+
+      // データ出力
+      function exportData() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const radios = document.querySelectorAll('input[type="radio"]:checked');
+        let data = "氏名,性別\n";
+
+        inputs.forEach((input, index) => {
+          const name = input.value || "未入力";
+          const gender = getGenderForIndex(index + 1);
+          data += name + "," + gender + "\n";
+        });
+
+        alert("データ出力:\n" + data);
+      }
+
+      function getGenderForIndex(index) {
+        const radio = document.querySelector(
+          'input[name="gender' + index + '"]:checked',
+        );
+        if (radio) {
+          return radio.value === "male" ? "男" : "女";
+        }
+        return "未選択";
+      }
+
+      // リセット
+      function resetForm() {
+        clearAll();
+        alert("フォームがリセットされました");
+      }
+
+      // 性別切替
+      function toggleGender() {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio) => {
+          if (radio.value === "male") {
+            radio.checked = !radio.checked;
+          }
+        });
+        alert("性別選択を切り替えました");
+      }
+
+      // サンプル入力
+      function fillSampleData() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const sampleNames = [
+          "山田太郎",
+          "佐藤花子",
+          "鈴木一郎",
+          "高橋美咲",
+          "伊藤健太",
+          "渡辺恵子",
+          "山本浩二",
+          "中村沙織",
+          "小林敦子",
+          "加藤直樹",
+          "吉田優子",
+          "佐々木誠",
+          "田中理恵",
+          "西村健",
+          "東山美香",
+          "南雲翔",
+          "松本愛",
+          "井上大輔",
+          "木村由美",
+          "林宏",
+        ];
+
+        inputs.forEach((input, index) => {
+          if (index < sampleNames.length) {
+            input.value = sampleNames[index];
+          }
+        });
+
+        // 性別をランダムに設定
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio, index) => {
+          if (index % 2 === 0) {
+            radio.checked = radio.value === "male";
+          } else {
+            radio.checked = radio.value === "female";
+          }
+        });
+
+        alert("サンプルデータを入力しました");
+      }
+
+      // 入力数カウント
+      function countEntries() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const filledInputs = Array.from(inputs).filter(
+          (input) => input.value.trim() !== "",
+        );
+        alert(
+          "入力済みの項目数: " + filledInputs.length + " / " + inputs.length,
+        );
+      }
+
+      // 空欄ハイライト
+      function highlightEmpty() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input) => {
+          if (input.value.trim() === "") {
+            input.style.backgroundColor = "#fff3cd";
+            input.style.borderColor = "#ffc107";
+          } else {
+            input.style.backgroundColor = "";
+            input.style.borderColor = "#ced4da";
+          }
+        });
+        alert("空欄をハイライトしました");
+      }
+
+      // ローカルストレージに保存
+      function saveToLocalStorage() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const data = Array.from(inputs).map((input) => input.value);
+        localStorage.setItem("studentFormData", JSON.stringify(data));
+        alert("データを保存しました");
+      }
+
+      // ローカルストレージから読み込み
+      function loadFromLocalStorage() {
+        const savedData = localStorage.getItem("studentFormData");
+        if (savedData) {
+          const data = JSON.parse(savedData);
+          const inputs = document.querySelectorAll('input[type="text"]');
+          inputs.forEach((input, index) => {
+            if (index < data.length) {
+              input.value = data[index];
+            }
+          });
+          alert("保存されたデータを読み込みました");
+        } else {
+          alert("保存されたデータがありません");
+        }
+      }
+
+      // 保存削除
+      function clearStorage() {
+        localStorage.removeItem("studentFormData");
+        alert("保存データを削除しました");
+      }
+
+      // 印刷
+      function printForm() {
+        window.print();
+      }
+
+      // CSV出力
+      function exportCSV() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        let csv = "氏名,性別\n";
+
+        inputs.forEach((input, index) => {
+          const name = input.value || "未入力";
+          const gender = getGenderForIndex(index + 1);
+          csv += '"' + name + '","' + gender + '"\n';
+        });
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "student_data.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert("CSVファイルをダウンロードしました");
+      }
+    </script>
+  </body>
+</html>
